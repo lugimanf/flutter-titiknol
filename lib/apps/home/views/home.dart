@@ -22,18 +22,16 @@ class _HomeState extends State<Home> {
     final WidgetUserInfo userInfo = WidgetUserInfo(context);
 
     return Scaffold(
-      body: Container(
-        child: MainContainer(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                userInfo.UserInfo(),
-                const SizedBox(height: 20),
-                widgetButtonBento.ButtonBento(),
-                widgetArticles.HomeArticles(),
-              ],
-            ),
+      body: MainContainer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              userInfo.UserInfo(),
+              const SizedBox(height: 20),
+              widgetButtonBento.ButtonBento(),
+              widgetArticles.HomeArticles(),
+            ],
           ),
         ),
       ),

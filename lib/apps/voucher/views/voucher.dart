@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:titiknol/pkg/const/assets.dart' as const_assets;
 import 'package:titiknol/apps/voucher/views/voucher_user.dart';
 import 'package:titiknol/apps/voucher/views/voucher_list.dart';
 
@@ -18,34 +17,31 @@ class Voucher extends StatefulWidget {
 class _VoucherState extends State<Voucher> {
   @override
   Widget build(BuildContext context) {
-    double heightScreen = MediaQuery.sizeOf(context).height;
-    return DefaultTabController(
+    return const DefaultTabController(
       length: 2,
       child: Scaffold(
-        body: Container(
-          child: const SafeArea(
-            child: Column(
-              children: [
-                // TabBar di tengah
-                TabBar(
-                  tabs: [
-                    Tab(text: 'My Voucher'),
-                    Tab(text: 'Buy'),
+        body: SafeArea(
+          child: Column(
+            children: [
+              // TabBar di tengah
+              TabBar(
+                tabs: [
+                  Tab(text: 'My Voucher'),
+                  Tab(text: 'Change'),
+                ],
+                labelColor: Colors.blue,
+                unselectedLabelColor: Colors.grey,
+              ),
+              // Konten Login & Register
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    VoucherUser(),
+                    VoucherList(),
                   ],
-                  labelColor: Colors.blue,
-                  unselectedLabelColor: Colors.grey,
                 ),
-                // Konten Login & Register
-                const Expanded(
-                  child: TabBarView(
-                    children: [
-                      VoucherList(),
-                      VoucherUser(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

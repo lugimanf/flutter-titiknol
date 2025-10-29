@@ -97,8 +97,8 @@ class _MainMenuState extends State<MainMenu> {
                       onTap: () => onTabTapped(0),
                     ),
                     buildTabItem(
-                      icon: Icons.access_time,
-                      label: "Activity",
+                      icon: Icons.assignment,
+                      label: "Task",
                       index: 1,
                       selected: currentIndex == 1,
                       onTap: () => onTabTapped(1),
@@ -128,8 +128,8 @@ class _MainMenuState extends State<MainMenu> {
                       onTap: () => onTabTapped(0),
                     ),
                     buildTabItem(
-                      icon: Icons.access_time,
-                      label: "Activity",
+                      icon: Icons.assignment,
+                      label: "Task",
                       index: 1,
                       selected: currentIndex == 1,
                       onTap: () => onTabTapped(1),

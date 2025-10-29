@@ -17,9 +17,13 @@ dependencies:
   flutter_launcher_icons: ^0.13.1  
   get: ^4.6.6
   http: ^1.2.2
+  mobile_scanner: ^3.0.0    # cek versi terbaru di pub.dev saat implementasi
   package_info_plus: ^4.0.0
+  permission_handler: ^10.0.0
   recase: ^4.1.0
   shared_preferences: ^2.3.2
+  
+  
   
 
 dev_dependencies:

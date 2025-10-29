@@ -34,7 +34,6 @@ class HomeViewModel extends GetxController {
   Future<void> fetchUser() async {
     try {
       final response = await _userService.getUser();
-      print(response);
       user.value = response;
     } catch (e) {
       Get.defaultDialog(

@@ -22,13 +22,13 @@ class WidgetHelper {
   }
 
   Widget createImage(String url, double wCard, hCard,
-      {double borderRadius = 0}) {
+      {double borderRadius = 0, BoxFit fit = BoxFit.cover}) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(borderRadius),
         child: CachedNetworkImage(
           width: wCard,
           height: hCard,
-          fit: BoxFit.cover,
+          fit: fit,
           imageUrl: url,
           placeholder: (context, url) => const SizedBox(
               width: 10,
