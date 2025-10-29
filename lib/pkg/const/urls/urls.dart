@@ -5,9 +5,10 @@ class Urls {
       dotenv.env['API_URL'] ?? 'https://localhost:8000';
   static const String login = "api/login";
   static const String loginConfirmOtp = "api/login/confirm-otp";
-  static const String homeArticles = "api/articles";
+  static const String articles = "api/articles";
   static const String books = "books";
   static const String authors = "authors";
   static const String publishers = "publishers";
+  static const String user = "api/user";
   static const bool isHttps = false;
 }

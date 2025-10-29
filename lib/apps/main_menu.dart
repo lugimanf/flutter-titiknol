@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import './home/views/home.dart';
 import './account/views/account.dart';
-// import './priviledge/views/priviledge.dart';
-import './activity/views/activity.dart';
+import 'voucher/views/voucher.dart';
+import 'task/views/task.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -13,12 +13,12 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> {
   int currentIndex = 0;
-  bool showMiddleButton = false; // ✅ FAB aktif/nonaktif
+  bool showMiddleButton = true; // ✅ FAB aktif/nonaktif
 
   final screens = [
     const Home(),
-    // const Priviledge(),
-    const Activity(),
+    const Task(),
+    const Voucher(),
     const Account(),
   ];
 
@@ -75,7 +75,7 @@ class _MainMenuState extends State<MainMenu> {
               },
               shape: const CircleBorder(),
               backgroundColor: Colors.amber,
-              child: const Icon(Icons.add),
+              child: const Icon(Icons.camera_alt_rounded),
             )
           : null,
       floatingActionButtonLocation:
@@ -96,7 +96,6 @@ class _MainMenuState extends State<MainMenu> {
                       selected: currentIndex == 0,
                       onTap: () => onTabTapped(0),
                     ),
-                    const SizedBox(width: 48),
                     buildTabItem(
                       icon: Icons.access_time,
                       label: "Activity",
@@ -104,12 +103,20 @@ class _MainMenuState extends State<MainMenu> {
                       selected: currentIndex == 1,
                       onTap: () => onTabTapped(1),
                     ),
+                    const SizedBox(width: 48),
                     buildTabItem(
-                      icon: Icons.person,
-                      label: "Profile",
+                      icon: Icons.airplane_ticket,
+                      label: "Voucher",
                       index: 2,
                       selected: currentIndex == 2,
                       onTap: () => onTabTapped(2),
+                    ),
+                    buildTabItem(
+                      icon: Icons.person,
+                      label: "Profile",
+                      index: 3,
+                      selected: currentIndex == 3,
+                      onTap: () => onTabTapped(3),
                     ),
                   ]
                 : [
@@ -128,11 +135,18 @@ class _MainMenuState extends State<MainMenu> {
                       onTap: () => onTabTapped(1),
                     ),
                     buildTabItem(
-                      icon: Icons.person,
-                      label: "Profile",
+                      icon: Icons.card_giftcard,
+                      label: "Voucher",
                       index: 2,
                       selected: currentIndex == 2,
                       onTap: () => onTabTapped(2),
+                    ),
+                    buildTabItem(
+                      icon: Icons.person,
+                      label: "Profile",
+                      index: 3,
+                      selected: currentIndex == 3,
+                      onTap: () => onTabTapped(3),
                     ),
                   ],
           ),

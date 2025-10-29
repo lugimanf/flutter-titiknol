@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 3), () {
       if (globals.token == null) {
         Get.offAllNamed("/login");
         return;

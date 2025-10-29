@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
 import 'package:titiknol/apps/home/viewmodels/home.dart';
 
-class WidgetFeaturedByVellux {
+class WidgetArticles {
   late double wCardBox, hCardBox;
   late WidgetHelper widgetHelper;
   BuildContext context;
 
-  WidgetFeaturedByVellux(this.context) {
+  WidgetArticles(this.context) {
     init();
   }
 
@@ -72,7 +72,7 @@ class WidgetFeaturedByVellux {
     });
   }
 
-  Widget featuredByVellux() {
+  Widget HomeArticles() {
     return Column(
       children: [
         const SizedBox(height: 16),
@@ -81,7 +81,7 @@ class WidgetFeaturedByVellux {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Featured by Vellux",
+              "Berita",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -94,7 +94,7 @@ class WidgetFeaturedByVellux {
               child: Text(
                 "Discover More",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.3,
                   color: Color(0xFFFFD700),
