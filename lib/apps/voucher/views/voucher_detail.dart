@@ -125,8 +125,62 @@ class _VoucherDetailState extends State<VoucherDetail> {
             width: double.infinity,
             height: 55,
             child: ElevatedButton(
-              onPressed: () {
-                // TODO: tambah aksi redeem nanti
+              onPressed: () async {
+                Get.defaultDialog(
+                  title: 'Konfirmasi',
+                  middleText:
+                      'Apakah kamu yakin ingin menukar voucher ini dengan point?',
+                  textCancel: 'Batal',
+                  textConfirm: 'Ya, Tukar',
+                  confirmTextColor: Colors.white,
+                  buttonColor: Colors.green,
+                  onConfirm: () {
+                    // TODO: aksi redeem
+                    Get.back(); // tutup dialog
+                    Get.back(); // tutup halaman voucher detail
+                    Get.snackbar(
+                      'Berhasil',
+                      'Voucher berhasil ditukar!',
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                    );
+                  },
+                );
+                // final confirmed = await showDialog<bool>(
+                //   context: context,
+                //   builder: (context) => AlertDialog(
+                //     title: const Text('Konfirmasi'),
+                //     content: const Text(
+                //         'Apakah kamu yakin ingin menukar voucher ini?'),
+                //     actions: [
+                //       TextButton(
+                //         onPressed: () =>
+                //             Navigator.pop(context, false), // cancel
+                //         child: const Text('Batal'),
+                //       ),
+                //       ElevatedButton(
+                //         onPressed: () => Navigator.pop(context, true), // ok
+                //         style: ElevatedButton.styleFrom(
+                //           backgroundColor: Colors.green,
+                //         ),
+                //         child: const Text('Ya, Tukar'),
+                //       ),
+                //     ],
+                //   ),
+                // );
+
+                // // kalau user tekan "Batal", confirmed == false / null
+                // if (confirmed == true) {
+                //   // TODO: tambahkan aksi redeem di sini
+                //   Get.snackbar(
+                //     'Berhasil',
+                //     'Voucher berhasil ditukar!',
+                //     snackPosition: SnackPosition.TOP,
+                //     backgroundColor: Colors.green,
+                //     colorText: Colors.white,
+                //   );
+                // }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green, // 🔹 tombol warna hijau
