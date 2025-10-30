@@ -11,5 +11,6 @@ class Urls {
   static const String publishers = "publishers";
   static const String user = "api/user";
   static const String vouchers = "api/vouchers";
+  static const String voucherByID = "api/voucher/";
   static const bool isHttps = false;
 }

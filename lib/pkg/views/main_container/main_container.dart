@@ -12,10 +12,15 @@ const double mainContainerPaddingRight = 0;
 const double heightScreen707 = 708;
 
 class MainContainer extends StatefulWidget {
-  const MainContainer({super.key, required this.child, this.useMargin = true});
+  const MainContainer(
+      {super.key,
+      required this.child,
+      this.useMargin = true,
+      this.background = 'gradient'});
 
   final Widget child;
   final bool useMargin;
+  final String background;
 
   static MainContainerState of(BuildContext context) {
     return context.findAncestorStateOfType<MainContainerState>()!;
@@ -33,33 +38,40 @@ class MainContainerState extends State<MainContainer> {
     if (heightScreen > heightScreen707) {
       marginTop = mainContainerMarginTop50;
     }
-
+    double marginLeft = mainContainerMarginLeft;
+    double marginRight = mainContainerMarginRight;
     if (!widget.useMargin) {
       marginTop = 0;
+      marginLeft = 0;
+      marginRight = 0;
     }
+
+    final boxDecoration = widget.background == "transparant"
+        ? null
+        : BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.grey.shade900,
+                Colors.black,
+                Colors.grey.shade800,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          );
 
     return Container(
       constraints: BoxConstraints(
         minHeight: MediaQuery.of(context).size.height,
       ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.grey.shade900,
-            Colors.black,
-            Colors.grey.shade800,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: boxDecoration,
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.only(
             top: marginTop,
             bottom: mainContainerMarginBottom,
-            left: mainContainerMarginLeft,
-            right: mainContainerMarginRight),
+            left: marginLeft,
+            right: marginRight),
         padding: const EdgeInsets.only(
             top: mainContainerPaddingTop,
             bottom: mainContainerPaddingBottom,
