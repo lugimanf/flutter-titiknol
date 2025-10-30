@@ -24,7 +24,6 @@ class HomeViewModel extends GetxController {
       if (response.containsKey('message')) {
         throw Exception(response['message']); // lempar pesan error
       }
-      print("[DEBUG] response => $response");
       final data = response['data']['articles'] as List;
       articles.assignAll(data.map((u) => Article.fromJson(u)).toList());
     } catch (e) {
