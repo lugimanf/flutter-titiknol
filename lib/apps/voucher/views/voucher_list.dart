@@ -12,9 +12,7 @@ class VoucherList extends StatefulWidget {
 }
 
 class _VoucherListState extends State<VoucherList> {
-  // late WidgetHelper widgetHelper;
   void _goToDetailVoucher() {
-    print("menuju detail voucher");
     // Get.to(() => const DetailBook(), arguments: data);
   }
 
@@ -49,7 +47,7 @@ class _VoucherListState extends State<VoucherList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     // 🖼️ Bagian gambar proporsional & tidak terpotong
                     AspectRatio(
                       aspectRatio: 4 / 3, // ubah jadi 1 kalau mau persegi

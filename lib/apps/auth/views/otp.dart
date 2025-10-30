@@ -60,7 +60,7 @@ class _OtpFormState extends State<OtpForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
+        margin: const EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
         child: Column(
           children: [
             const Padding(

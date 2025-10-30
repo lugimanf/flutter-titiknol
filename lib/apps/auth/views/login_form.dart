@@ -69,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
             borderSide: BorderSide(color: Colors.white),
           ),
         ),
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         cursorColor: Colors.white,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
@@ -80,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF6B4F3B),
+          backgroundColor: const Color(0xFF6B4F3B),
         ),
         onPressed: () {
           if (_formKey.currentState?.saveAndValidate() ?? false) {

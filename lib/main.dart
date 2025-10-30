@@ -8,7 +8,7 @@ import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
 import 'package:titiknol/pkg/globals/globals.dart' as globals;
 import 'package:titiknol/pkg/const/keys.dart' as const_keys;
 import 'package:titiknol/apps/splash/views/splash.dart';
-import 'package:titiknol/apps/auth/views/loginForm.dart';
+import 'package:titiknol/apps/auth/views/login_form.dart';
 import 'package:titiknol/apps/main_menu.dart';
 
 Future<void> _getAppVersion() async {

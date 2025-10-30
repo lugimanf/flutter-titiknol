@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:titiknol/pkg/const/assets.dart' as const_assets;
-import 'package:titiknol/apps/auth/views/loginForm.dart';
-import 'package:titiknol/apps/auth/views/registerForm.dart';
+import 'package:titiknol/apps/auth/views/login_form.dart';
+import 'package:titiknol/apps/auth/views/register_form.dart';
 
 const double sizeBoxForLoginWithGoogle = 5;
 const double sizeBoxHeightDistanceEachButton = 7;

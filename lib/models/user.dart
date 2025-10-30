@@ -13,13 +13,12 @@ class User {
       this.point = 0});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    final user = json['data'];
     return User(
-      id: user['id'],
-      email: user['email'],
-      firstName: user['first_name'],
-      lastName: user['last_name'],
-      point: user['point'],
+      id: json['id'],
+      email: json['email'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      point: json['point'],
     );
   }
 }

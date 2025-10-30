@@ -45,7 +45,7 @@ class WidgetButtonBento {
     );
   }
 
-  Widget ButtonBento() {
+  Widget buttonBento() {
     List<List<dynamic>> listButton = [
       [const_assets.iconTask, const_labels.buttonTask],
       [const_assets.iconEvent, const_labels.buttonEvent],

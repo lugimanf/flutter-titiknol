@@ -16,7 +16,7 @@ class RegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+    final formKey = GlobalKey<FormBuilderState>();
     final LoginViewModel viewModels = Get.put(LoginViewModel());
     double heightScreen = MediaQuery.sizeOf(context).height;
 
@@ -64,7 +64,7 @@ class RegisterForm extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: FormBuilder(
-                key: _formKey,
+                key: formKey,
                 child: Column(
                   children: <Widget>[
                     edtTextFullName,

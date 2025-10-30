@@ -30,35 +30,37 @@ class WidgetArticles {
   Widget listFeaturedArticles() {
     HomeViewModel homeViewModel = Get.find();
     return Obx(() {
-      int articleLength = homeViewModel.articleList.length;
+      int articleLength = homeViewModel.articles.length;
       if (articleLength == 0) {
         return const Center(child: CircularProgressIndicator());
       } else {
         return ListView.builder(
-            padding: EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true, // penting agar tidak konflik dengan scroll luar
             physics:
                 const ClampingScrollPhysics(), // biar scroll luar yang aktif
             itemCount: articleLength,
             itemBuilder: (context, index) {
-              final article = homeViewModel.articleList[index];
+              final article = homeViewModel.articles[index];
               return GestureDetector(
                 onTap: () {
                   _goToDetailBook();
                 },
                 child: Card(
-                  margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   child: Row(
                     children: [
                       widgetHelper.createImage(
                           article.image, wCardBox, hCardBox),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(article.title,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
                             // Text("Created at: ${article.created_at}"),
                           ],
                         ),
@@ -72,7 +74,7 @@ class WidgetArticles {
     });
   }
 
-  Widget HomeArticles() {
+  Widget homeArticles() {
     return Column(
       children: [
         const SizedBox(height: 16),

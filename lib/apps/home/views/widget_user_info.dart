@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recase/recase.dart';
 
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
 import 'package:titiknol/apps/home/viewmodels/home.dart';
@@ -20,7 +19,7 @@ class WidgetUserInfo {
     hCardBox = widgetHelper.heightScreen * 0.1;
   }
 
-  Widget UserInfo() {
+  Widget userInfo() {
     HomeViewModel homeViewModel = Get.find();
     return Card(
       elevation: 2.0,

@@ -129,7 +129,12 @@ class HttpHelper {
     } else if (e is TimeoutException) {
       error = const_https.errorRTO;
     } else if (e is http.ClientException) {
-      error = const_https.errorClietException;
+      if (e.message.contains(const_https.httpMessageErrorConnectionByPeer) ||
+          e.message.contains(const_https.httpMessageErrorConnectionRefused)) {
+        error = const_https.errorSocketException;
+      } else {
+        error = const_https.errorClietException;
+      }
     } else if (e is CertificateException || e is HandshakeException) {
       error = const_https.errorClietException;
     } else {

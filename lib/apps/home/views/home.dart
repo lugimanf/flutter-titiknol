@@ -27,10 +27,10 @@ class _HomeState extends State<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              userInfo.UserInfo(),
+              userInfo.userInfo(),
               const SizedBox(height: 20),
-              widgetButtonBento.ButtonBento(),
-              widgetArticles.HomeArticles(),
+              widgetButtonBento.buttonBento(),
+              widgetArticles.homeArticles(),
             ],
           ),
         ),

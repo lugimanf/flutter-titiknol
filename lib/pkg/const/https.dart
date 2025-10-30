@@ -6,3 +6,6 @@ const String errorSocketException =
 const String errorClietException = "client exception occured";
 const String errorCertificationException =
     "please check your connection http / https and certification";
+
+const String httpMessageErrorConnectionByPeer = "Connection reset by peer";
+const String httpMessageErrorConnectionRefused = "Connection refused";

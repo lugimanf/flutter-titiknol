@@ -40,44 +40,31 @@ class _LoginState extends State<Login> {
           // FormBuilderValidators.email(),
         ]));
 
-    var edtTextPassword = FormBuilderTextField(
-      name: const_object_name.edtTextPassword,
-      decoration: const InputDecoration(
-        labelText: const_labels.textPassword,
-        border: OutlineInputBorder(),
-      ),
-      obscureText: true,
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(),
-        FormBuilderValidators.minLength(6),
-      ]),
-    );
-
-    var btnLoginWithGoogle = SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          viewModels.login(_formKey.currentState!.value);
-        },
-        child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, //Center Row contents horizontally,
-          crossAxisAlignment:
-              CrossAxisAlignment.center, //Center Row contents vertically,
-          children: [
-            Image.asset(
-              const_assets.iconGoogleLogo,
-              height: 20,
-            ),
-            const SizedBox(width: sizeBoxForLoginWithGoogle),
-            const Text(
-              const_labels.buttonLoginWithGoogle,
-              style: TextStyle(color: Colors.black),
-            ),
-          ],
-        ),
-      ),
-    );
+    // var btnLoginWithGoogle = SizedBox(
+    //   width: double.infinity,
+    //   child: ElevatedButton(
+    //     onPressed: () {
+    //       viewModels.login(_formKey.currentState!.value);
+    //     },
+    //     child: Row(
+    //       mainAxisAlignment:
+    //           MainAxisAlignment.center, //Center Row contents horizontally,
+    //       crossAxisAlignment:
+    //           CrossAxisAlignment.center, //Center Row contents vertically,
+    //       children: [
+    //         Image.asset(
+    //           const_assets.iconGoogleLogo,
+    //           height: 20,
+    //         ),
+    //         const SizedBox(width: sizeBoxForLoginWithGoogle),
+    //         const Text(
+    //           const_labels.buttonLoginWithGoogle,
+    //           style: TextStyle(color: Colors.black),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
 
     var btnLogin = SizedBox(
       width: double.infinity,
@@ -95,20 +82,6 @@ class _LoginState extends State<Login> {
           const_labels.buttonLogin,
           style: TextStyle(color: Colors.black),
         ),
-      ),
-    );
-
-    var btnRegister = SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
-        ),
-        onPressed: () {
-          Get.offNamed("/register");
-        },
-        child: const Text(const_labels.buttonRegister,
-            style: TextStyle(color: Colors.white)),
       ),
     );
 
