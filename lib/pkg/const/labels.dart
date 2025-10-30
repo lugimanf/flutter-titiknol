@@ -34,3 +34,6 @@ const String errorSystem =
     "error (response_status_code) system please contact our customer service";
 const String errorDefault = "An unexpected error occurred =>";
 const String errorPasswordNotMatch = "Passwords do not match";
+const String successProcess = "Success";
+//untuk voucher
+const String successGetVoucher = "Voucher Received!";

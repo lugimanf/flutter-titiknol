@@ -5,6 +5,7 @@ import 'package:titiknol/pkg/const/fonts.dart' as const_fonts;
 import 'package:titiknol/pkg/views/main_container/main_container.dart';
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
 import 'package:titiknol/models/voucher.dart';
+import 'package:titiknol/apps/voucher/views/voucher.dart' as voucherView;
 import 'package:titiknol/apps/voucher/viewmodels/voucher_detail.dart';
 
 class VoucherDetail extends StatefulWidget {
@@ -134,13 +135,22 @@ class _VoucherDetailState extends State<VoucherDetail> {
                   textConfirm: 'Ya, Tukar',
                   confirmTextColor: Colors.white,
                   buttonColor: Colors.green,
+                  onCancel: () {
+                    Get.back(); // tutup dialog
+                    Get.back(); // tutup halaman voucher detail
+                  },
                   onConfirm: () {
                     // TODO: aksi redeem
                     Get.back(); // tutup dialog
                     Get.back(); // tutup halaman voucher detail
+                    // 🔹 Akses controller tab dari halaman Voucher
+                    final voucherTabController =
+                        Get.find<voucherView.VoucherTabController>();
+                    voucherTabController.changeTab(0); // 0 = My Voucher
+
                     Get.snackbar(
-                      'Berhasil',
-                      'Voucher berhasil ditukar!',
+                      const_labels.successProcess,
+                      const_labels.successGetVoucher,
                       snackPosition: SnackPosition.TOP,
                       backgroundColor: Colors.green,
                       colorText: Colors.white,
