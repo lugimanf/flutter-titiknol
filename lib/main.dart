@@ -126,20 +126,21 @@ class _MyAppState extends State<MyApp> {
       printDebug(
           '📩 Message received in foreground: ${message.notification?.title}');
       final notification = message.notification;
-      if (notification != null) {
+      if (notification != null && globals.token != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
           notification.body,
           const NotificationDetails(
             android: AndroidNotificationDetails(
-              'high_importance_channel',
-              'High Importance Notifications',
-              channelDescription:
-                  'This channel is used for important notifications.',
-              importance: Importance.high,
-              priority: Priority.high,
-            ),
+                'high_importance_channel', 'High Importance Notifications',
+                channelDescription:
+                    'This channel is used for important notifications.',
+                importance: Importance.high,
+                priority: Priority.high,
+                icon: '@drawable/ic_stat_titiknol',
+                largeIcon: DrawableResourceAndroidBitmap(
+                    '@drawable/ic_stat_titiknol')),
           ),
         );
       }
