@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()        // ⬅️ WAJIB: ambil plugin dari repo Google
+        mavenCentral()  // ⬅️ WAJIB: ambil dependensi lain
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.6.1' // sesuaikan versi Gradle kamu
+        classpath 'com.google.gms:google-services:4.4.2' // plugin Firebase
+    }
+}
+
 allprojects {
     repositories {
         google()

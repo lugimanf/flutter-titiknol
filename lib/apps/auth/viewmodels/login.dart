@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:titiknol/pkg/storage/shared_preferences.dart';
 import 'package:titiknol/pkg/const/keys.dart' as const_keys;
 import 'package:titiknol/pkg/globals/globals.dart' as globals;
+import 'package:titiknol/apps/auth/viewmodels/fcm_token.dart';
 
 class LoginViewModel extends GetxController {
   final LoginService _loginService = LoginService();
@@ -32,6 +33,7 @@ class LoginViewModel extends GetxController {
   }
 
   void loginConfirmOtp(String otp, String token) async {
+    final FcmTokenViewModel fcmTokenViewModel = FcmTokenViewModel();
     bool login = false;
     isLoading.value = true;
     messageLogin.value = "";
@@ -42,6 +44,7 @@ class LoginViewModel extends GetxController {
         login = true;
         prefs.setString(const_keys.jwtToken, response['data']['token']);
         globals.token = response['data']['token'];
+        fcmTokenViewModel.updateFcmTOken(globals.fcmToken!);
       } else if (response.containsKey('message')) {
         messageLogin(response['message']);
       }

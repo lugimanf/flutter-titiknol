@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 void printDebug(res) {
-  print("[DEBUG] $res");
+  debugPrint("[DEBUG] $res");
 }

@@ -105,10 +105,34 @@ class HttpHelper {
     }
   }
 
+  Future<Map<String, dynamic>> patch() async {
+    try {
+      if (_url?.isEmpty == true) {
+        return {
+          "message": errorMessageUrlNotSet,
+        };
+      }
+      if (globals.token?.isEmpty == false) {
+        _headers['Authorization'] = "Bearer ${globals.token}";
+      }
+      final response = await http
+          .patch(
+            Uri.parse(_url.toString()),
+            headers: _headers,
+            body: _body,
+          )
+          .timeout(const Duration(seconds: const_https.timeOutHTTP));
+      return processResponse(response);
+    } catch (e) {
+      return errorException(e);
+    }
+  }
+
   Map<String, dynamic> processResponse(response) {
     data = jsonDecode(response.body);
     switch (checkStatusCode(response.statusCode)) {
       case statusCodeRedirectToLogin:
+        globals.token = null;
         Get.offAllNamed('/login');
         break;
       case statusCodeBadRequest:

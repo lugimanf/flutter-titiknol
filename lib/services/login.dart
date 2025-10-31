@@ -12,8 +12,8 @@ class LoginService {
     };
     httpHelper.setUrl(Urls.domain, Urls.login);
     httpHelper.setBody(jsonEncode(payload));
-    var data = await httpHelper.post();
-    return data;
+    var response = await httpHelper.post();
+    return response;
   }
 
   Future<Map<String, dynamic>> loginConfirmOtp(String otp, String token) async {
@@ -23,7 +23,7 @@ class LoginService {
     };
     httpHelper.setUrl(Urls.domain, Urls.loginConfirmOtp);
     httpHelper.setBody(jsonEncode(payload));
-    var data = await httpHelper.post();
-    return data;
+    var response = await httpHelper.post();
+    return response;
   }
 }
