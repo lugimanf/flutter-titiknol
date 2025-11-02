@@ -14,8 +14,8 @@ class VoucherListViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchVouchers();
     fetchUser();
+    fetchVouchers();
   }
 
   Future<void> fetchVouchers() async {

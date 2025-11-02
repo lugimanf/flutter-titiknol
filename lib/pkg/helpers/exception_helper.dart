@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 
-void exceptionDialogBox(Object e, {title = "Info"}) {
+void exceptionDialogBox(Object e, {title = "info"}) {
   Get.defaultDialog(
-    title: "Info",
-    middleText: e.toString().replaceFirst('Exception: ', ''),
+    title: title,
+    middleText: e.toString().replaceAll('Exception: ', ''),
     textConfirm: "OK",
     onConfirm: () => Get.back(),
   );

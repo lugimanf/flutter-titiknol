@@ -17,6 +17,8 @@ const String textFullname = "Fullname";
 const String textMobilePhone = "Mobile Phone";
 const String textConfirmPassword = "Confirm Password";
 const String textWaitingLogin = "waiting check your credential";
+const String textWaitingProcessExchangeVoucher =
+    "menunggu proses penukaran voucher";
 const String textWaitingRegister = "waiting register your account";
 const String titleMenuAttend = "Attend";
 const String titleMenuLibrary = "Library";
@@ -30,10 +32,18 @@ const String titleNewBooks = "New Books";
 const String titleTopAuthors = "Top Authors";
 const String titleTopPublishers = "Top Publishers";
 const String buttonAccount = "Account";
+const String buttonExchange = "Tukar";
+const String buttonExchangePointNotEnough = "Poin Tidak Cukup";
 const String errorSystem =
     "error (response_status_code) system please contact our customer service";
 const String errorDefault = "An unexpected error occurred =>";
 const String errorPasswordNotMatch = "Passwords do not match";
 const String successProcess = "Success";
 //untuk voucher
+const String labelYourPoint = 'Point Anda';
 const String successGetVoucher = "Voucher Received!";
+const String dialogTitleConfirmation = "Konfirmasi";
+const String dialogButtonCancel = "Batal";
+const String dialogButtonExchange = "Ya, Tukar!";
+const String dialogExchangeAskConfirmation =
+    'Apakah kamu yakin ingin menukar voucher ini dengan point?';

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 import 'package:titiknol/pkg/const/fonts.dart' as const_fonts;
+import 'package:titiknol/pkg/helpers/exception_helper.dart';
 import 'package:titiknol/pkg/views/main_container/main_container.dart';
+import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
-import 'package:titiknol/models/voucher.dart';
-import 'package:titiknol/apps/voucher/views/voucher.dart' as voucherView;
+import 'package:titiknol/apps/voucher/views/voucher.dart' as voucher_view;
 import 'package:titiknol/apps/voucher/viewmodels/voucher_detail.dart';
 
 class VoucherDetail extends StatefulWidget {
@@ -21,11 +22,12 @@ class _VoucherDetailState extends State<VoucherDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final Voucher data = Get.arguments;
+    final Map<String, dynamic> data = Get.arguments;
     widgetHelper = WidgetHelper(context);
 
     // Inject controller
-    voucherDetailViewModel = Get.put(VoucherDetailViewModel(data.id));
+    voucherDetailViewModel =
+        Get.put(VoucherDetailViewModel(data['voucher_id']));
 
     return Scaffold(
       appBar: AppBar(
@@ -69,15 +71,40 @@ class _VoucherDetailState extends State<VoucherDetail> {
                 // 🔹 Harga
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    '${voucher.price.toStringAsFixed(0)} pts',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.redAccent,
-                      fontFamily: const_fonts.fontFamilyUsed,
-                    ),
-                  ),
+                  child: voucher.finalPrice != voucher.price
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              '${voucher.finalPrice.toStringAsFixed(0)} pts',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.redAccent,
+                                fontFamily: const_fonts.fontFamilyUsed,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '${voucher.price.toStringAsFixed(0)} pts',
+                              style: const TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                decorationThickness: 2,
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Text(
+                          '${voucher.finalPrice.toStringAsFixed(0)} pts',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: const_fonts.fontFamilyUsed,
+                          ),
+                        ),
                 ),
 
                 const SizedBox(height: 10),
@@ -120,88 +147,77 @@ class _VoucherDetailState extends State<VoucherDetail> {
       // 🔹 Tombol selalu di bawah (sticky)
       bottomNavigationBar: SafeArea(
         child: Container(
-          color: Colors.black, // 🔹 background hitam
+          color: Colors.black,
           padding: const EdgeInsets.all(16),
           child: SizedBox(
             width: double.infinity,
             height: 55,
             child: ElevatedButton(
-              onPressed: () async {
-                Get.defaultDialog(
-                  title: 'Konfirmasi',
-                  middleText:
-                      'Apakah kamu yakin ingin menukar voucher ini dengan point?',
-                  textCancel: 'Batal',
-                  textConfirm: 'Ya, Tukar',
-                  confirmTextColor: Colors.white,
-                  buttonColor: Colors.green,
-                  onCancel: () {
-                    Get.back(); // tutup dialog
-                    Get.back(); // tutup halaman voucher detail
-                  },
-                  onConfirm: () {
-                    // TODO: aksi redeem
-                    Get.back(); // tutup dialog
-                    Get.back(); // tutup halaman voucher detail
-                    // 🔹 Akses controller tab dari halaman Voucher
-                    final voucherTabController =
-                        Get.find<voucherView.VoucherTabController>();
-                    voucherTabController.changeTab(0); // 0 = My Voucher
+              // 🔹 kalau poin cukup => bisa diklik, kalau tidak => null (disable)
+              onPressed: data['can_exchange']
+                  ? () async {
+                      Get.back();
+                    }
+                  : () async {
+                      Get.defaultDialog(
+                        title: const_labels.dialogTitleConfirmation,
+                        middleText: const_labels.dialogExchangeAskConfirmation,
+                        textCancel: const_labels.dialogButtonCancel,
+                        textConfirm: const_labels.dialogButtonExchange,
+                        confirmTextColor: Colors.white,
+                        buttonColor: Colors.green,
+                        onCancel: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        onConfirm: () async {
+                          Get.back();
+                          LoadingOverlay.of(context).show(
+                              message: const_labels
+                                  .textWaitingProcessExchangeVoucher);
+                          voucherDetailViewModel
+                              .insertVoucher(data['voucher_id'])
+                              .then((response) {
+                            if (response['status']) {
+                              Get.back();
+                              Get.snackbar(
+                                const_labels.successProcess,
+                                const_labels.successGetVoucher,
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: Colors.green,
+                                colorText: Colors.white,
+                              );
+                              final voucherTabController =
+                                  Get.find<voucher_view.VoucherTabController>();
+                              voucherTabController.changeTab(0);
+                            } else {
+                              throw Exception(response['message']);
+                            }
+                          }).catchError((e) {
+                            exceptionDialogBox(e, title: "warning");
+                          }).whenComplete(() {
+                            LoadingOverlay.of(context).hide();
+                          });
+                        },
+                      );
+                    }, // 🔹 null artinya disabled di ElevatedButton
 
-                    Get.snackbar(
-                      const_labels.successProcess,
-                      const_labels.successGetVoucher,
-                      snackPosition: SnackPosition.TOP,
-                      backgroundColor: Colors.green,
-                      colorText: Colors.white,
-                    );
-                  },
-                );
-                // final confirmed = await showDialog<bool>(
-                //   context: context,
-                //   builder: (context) => AlertDialog(
-                //     title: const Text('Konfirmasi'),
-                //     content: const Text(
-                //         'Apakah kamu yakin ingin menukar voucher ini?'),
-                //     actions: [
-                //       TextButton(
-                //         onPressed: () =>
-                //             Navigator.pop(context, false), // cancel
-                //         child: const Text('Batal'),
-                //       ),
-                //       ElevatedButton(
-                //         onPressed: () => Navigator.pop(context, true), // ok
-                //         style: ElevatedButton.styleFrom(
-                //           backgroundColor: Colors.green,
-                //         ),
-                //         child: const Text('Ya, Tukar'),
-                //       ),
-                //     ],
-                //   ),
-                // );
-
-                // // kalau user tekan "Batal", confirmed == false / null
-                // if (confirmed == true) {
-                //   // TODO: tambahkan aksi redeem di sini
-                //   Get.snackbar(
-                //     'Berhasil',
-                //     'Voucher berhasil ditukar!',
-                //     snackPosition: SnackPosition.TOP,
-                //     backgroundColor: Colors.green,
-                //     colorText: Colors.white,
-                //   );
-                // }
-              },
+              // 🔹 ubah warna tombol sesuai kondisi
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green, // 🔹 tombol warna hijau
+                backgroundColor:
+                    data['can_exchange'] ? Colors.grey.shade700 : Colors.green,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Change',
-                style: TextStyle(
-                  color: Colors.white, // teks putih biar kontras
+
+              // 🔹 ubah juga teksnya biar user paham
+              child: Text(
+                data['can_exchange']
+                    ? const_labels.buttonExchangePointNotEnough
+                    : const_labels.buttonExchange,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),

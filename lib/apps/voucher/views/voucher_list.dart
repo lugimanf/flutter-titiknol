@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:titiknol/apps/voucher/views/voucher_detail.dart';
 import 'package:titiknol/apps/voucher/viewmodels/voucher_list.dart';
 import 'package:titiknol/models/voucher.dart';
+import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
+import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
 
 class VoucherList extends StatefulWidget {
   const VoucherList({super.key});
@@ -14,8 +16,12 @@ class VoucherList extends StatefulWidget {
 }
 
 class _VoucherListState extends State<VoucherList> {
-  void _goToDetailVoucher(Voucher data) {
-    Get.to(() => const VoucherDetail(), arguments: data);
+  void _goToDetailVoucher(Voucher voucher, int point) {
+    final data = {
+      "voucher_id": voucher.id,
+      "can_exchange": voucher.finalPrice > point,
+    };
+    Get.to(() => const LoadingOverlay(child: VoucherDetail()), arguments: data);
   }
 
   Widget listVouchers(
@@ -39,13 +45,9 @@ class _VoucherListState extends State<VoucherList> {
           itemBuilder: (context, index) {
             final voucher = voucherListViewModel.vouchers[index];
 
-            // logika harga
-            final bool hasDiscount = voucher.discountInPercent > 0;
-            final double price = voucher.price;
-            final double discountPrice = voucher.discountPrice;
-
             return GestureDetector(
-              onTap: () => _goToDetailVoucher(voucher),
+              onTap: () => _goToDetailVoucher(
+                  voucher, voucherListViewModel.user.value.point),
               child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
@@ -91,13 +93,13 @@ class _VoucherListState extends State<VoucherList> {
                     Padding(
                       padding: const EdgeInsets.only(
                           left: 10, right: 10, bottom: 10, top: 4),
-                      child: hasDiscount
+                      child: voucher.finalPrice != voucher.price
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.baseline,
                               textBaseline: TextBaseline.alphabetic,
                               children: [
                                 Text(
-                                  '${discountPrice.toStringAsFixed(0)} pts',
+                                  '${voucher.finalPrice.toStringAsFixed(0)} pts',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red,
@@ -106,7 +108,7 @@ class _VoucherListState extends State<VoucherList> {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  '${price.toStringAsFixed(0)} pts',
+                                  '${voucher.price.toStringAsFixed(0)} pts',
                                   style: const TextStyle(
                                     decoration: TextDecoration.lineThrough,
                                     decorationThickness: 2,
@@ -117,7 +119,7 @@ class _VoucherListState extends State<VoucherList> {
                               ],
                             )
                           : Text(
-                              '${price.toStringAsFixed(0)} pts',
+                              '${voucher.finalPrice.toStringAsFixed(0)} pts',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
@@ -154,7 +156,7 @@ class _VoucherListState extends State<VoucherList> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Your Points",
+                    const_labels.labelYourPoint,
                     style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   Obx(() => Text(

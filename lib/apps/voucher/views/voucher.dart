@@ -50,8 +50,8 @@ class _VoucherState extends State<Voucher> with SingleTickerProviderStateMixin {
             TabBar(
               controller: _tabController,
               tabs: const [
-                Tab(text: 'My Voucher'),
-                Tab(text: 'Change'),
+                Tab(text: 'Voucherku'),
+                Tab(text: 'Tukar'),
               ],
               labelColor: Colors.blue,
               unselectedLabelColor: Colors.grey,
