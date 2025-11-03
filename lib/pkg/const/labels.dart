@@ -47,3 +47,5 @@ const String dialogButtonCancel = "Batal";
 const String dialogButtonExchange = "Ya, Tukar!";
 const String dialogExchangeAskConfirmation =
     'Apakah kamu yakin ingin menukar voucher ini dengan point?';
+const String labelEmptyVoucherList = "Tidak ada voucher yang bisa ditukar";
+const String labelEmptyUserVoucher = "Anda belum memiliki voucher";

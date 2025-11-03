@@ -4,6 +4,7 @@ import 'package:titiknol/models/user_voucher.dart' as user_voucher_model;
 import 'package:titiknol/apps/voucher/viewmodels/user_voucher.dart';
 import 'package:titiknol/apps/voucher/views/user_voucher_detail.dart';
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
+import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
 
 class UserVoucher extends StatefulWidget {
@@ -55,15 +56,14 @@ class _UserVoucherState extends State<UserVoucher> {
           height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
           width: double.infinity, // lebar penuh
           child: const Center(
-            child: Text("Anda belum memiliki voucher"),
+            child: Text(const_labels.labelEmptyUserVoucher),
           ),
         );
       } else {
         return ListView.builder(
-            controller: _scrollController,
             padding: const EdgeInsets.only(top: 10),
             shrinkWrap: true, // penting agar tidak konflik dengan scroll luar
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             itemCount: articleLength,
             itemBuilder: (context, index) {
               final userVoucher = userVoucherViewModel.userVouchers[index];
@@ -105,11 +105,22 @@ class _UserVoucherState extends State<UserVoucher> {
   Widget build(BuildContext context) {
     widgetHelper = WidgetHelper(context);
     return RefreshIndicator(
-        onRefresh: () async {
-          userVoucherViewModel.userVouchers.clear();
-          userVoucherViewModel.page = 1;
-          userVoucherViewModel.fetchUserVouchers();
-        },
-        child: userVoucherList());
+      onRefresh: () async {
+        userVoucherViewModel.userVouchers.clear();
+        userVoucherViewModel.page = 1;
+        await userVoucherViewModel.fetchUserVouchers();
+      },
+      child: SizedBox(
+        height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: userVoucherList(),
+          ),
+        ),
+      ),
+    );
   }
 }

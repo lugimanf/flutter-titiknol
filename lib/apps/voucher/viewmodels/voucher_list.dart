@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:titiknol/pkg/helpers/debug_helper.dart';
 import 'package:titiknol/services/voucher.dart';
 import 'package:titiknol/services/user.dart';
 import 'package:titiknol/models/user.dart';
@@ -25,14 +26,15 @@ class VoucherListViewModel extends GetxController {
     try {
       if (isLoadingMore.value) return;
       isLoadingMore.value = true;
+      printDebug(page);
       final response =
           await _voucherService.getVouchers(page: page, limit: limit);
       if (response.containsKey('message')) {
         throw Exception(response['message']); // lempar pesan error
       }
       final data = response['data']['vouchers'] as List;
-      if (data.isNotEmpty) {
-        vouchers.assignAll(data.map((u) => Voucher.fromJson(u)).toList());
+      if (data.isNotEmpty || page == 1) {
+        vouchers.addAll(data.map((u) => Voucher.fromJson(u)).toList());
         page++;
       }
       isLoadingMore.value = false;

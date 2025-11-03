@@ -45,12 +45,17 @@ class _VoucherListState extends State<VoucherList> {
     Get.to(() => const LoadingOverlay(child: VoucherDetail()), arguments: data);
   }
 
-  Widget listVouchers(
-      WidgetHelper widgetHelper, VoucherListViewModel voucherListViewModel) {
+  Widget listVouchers() {
     return Obx(() {
       int voucherLength = voucherListViewModel.vouchers.length;
       if (voucherLength == 0) {
-        return const Center(child: CircularProgressIndicator());
+        return SizedBox(
+          height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
+          width: double.infinity, // lebar penuh
+          child: const Center(
+            child: Text(const_labels.labelEmptyVoucherList),
+          ),
+        );
       } else {
         return GridView.builder(
           padding: const EdgeInsets.all(10),
@@ -80,7 +85,7 @@ class _VoucherListState extends State<VoucherList> {
                   children: [
                     // 🖼️ Gambar
                     AspectRatio(
-                      aspectRatio: 4 / 3,
+                      aspectRatio: 4 / 2.9,
                       child: Container(
                         color: Colors.grey.shade200,
                         child: widgetHelper.createImage(
@@ -163,6 +168,8 @@ class _VoucherListState extends State<VoucherList> {
 
     return RefreshIndicator(
         onRefresh: () async {
+          voucherListViewModel.vouchers.clear();
+          voucherListViewModel.page = 1;
           await voucherListViewModel.fetchVouchers();
           await voucherListViewModel.fetchUser();
         },
@@ -192,11 +199,15 @@ class _VoucherListState extends State<VoucherList> {
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: listVouchers(widgetHelper, voucherListViewModel),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: listVouchers(),
+                  ),
                 ),
               ),
             ),

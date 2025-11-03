@@ -178,7 +178,7 @@ class _VoucherDetailState extends State<VoucherDetail> {
                           voucherDetailViewModel
                               .insertVoucher(data['voucher_id'])
                               .then((response) {
-                            if (response['status']) {
+                            if (response['status'] == "success") {
                               Get.back();
                               Get.snackbar(
                                 const_labels.successProcess,

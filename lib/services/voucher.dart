@@ -8,8 +8,11 @@ class VoucherService {
   Future<Map<String, dynamic>> getVouchers(
       {int page = 1, int limit = 10}) async {
     httpHelper.setUrl(Urls.domain, Urls.vouchers);
-    var response = await httpHelper
-        .get(queryParams: {"limit": "10", "page": "1", "order_by": "id;desc"});
+    var response = await httpHelper.get(queryParams: {
+      "limit": limit.toString(),
+      "page": page.toString(),
+      "order_by": "id;desc"
+    });
     return response;
   }
 
