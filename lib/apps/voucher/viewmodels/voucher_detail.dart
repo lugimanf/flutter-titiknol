@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:titiknol/apps/voucher/viewmodels/voucher_list.dart';
+import 'package:titiknol/apps/voucher/viewmodels/user_voucher.dart';
 import 'package:titiknol/services/voucher.dart';
 import 'package:titiknol/services/user_voucher.dart';
 import 'package:titiknol/models/voucher.dart';
@@ -33,12 +34,15 @@ class VoucherDetailViewModel extends GetxController {
 
   Future<Map<String, dynamic>> insertVoucher(int id) async {
     try {
-      final response = await _userVoucherService.fetchUserVouchers();
+      final response = await _userVoucherService.insertVoucher(id);
       if (response['status'] != "success") {
         throw Exception(response['message']); // lempar pesan error
       }
       final voucherListViewModel = Get.find<VoucherListViewModel>();
+      final userVoucherViewModel = Get.find<UserVoucherViewModel>();
       await voucherListViewModel.fetchUser();
+      userVoucherViewModel.resetPagination();
+      await userVoucherViewModel.fetchUserVouchers();
       return {"status": true};
     } catch (e) {
       return {"status": false, "message": e};

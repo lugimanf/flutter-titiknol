@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest_all.dart' as tzdata;
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:titiknol/apps/auth/viewmodels/fcm_token.dart';
 import 'package:titiknol/pkg/storage/shared_preferences.dart';
@@ -41,6 +43,9 @@ void init() {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  tzdata.initializeTimeZones();
+  await initializeDateFormatting('id_ID', null);
 
   //setup mendapatkan data dari env file
   const env =

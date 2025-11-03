@@ -6,6 +6,7 @@ import 'package:titiknol/apps/voucher/views/user_voucher_detail.dart';
 import 'package:titiknol/pkg/helpers/widget_helper.dart';
 import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
+import 'package:titiknol/pkg/helpers/datetime_helper.dart';
 
 class UserVoucher extends StatefulWidget {
   const UserVoucher({super.key});
@@ -50,7 +51,7 @@ class _UserVoucherState extends State<UserVoucher> {
 
   Widget userVoucherList() {
     return Obx(() {
-      int articleLength = userVoucherViewModel.userVouchers.length;
+      int articleLength = userVoucherViewModel.items.length;
       if (articleLength == 0) {
         return SizedBox(
           height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
@@ -66,7 +67,7 @@ class _UserVoucherState extends State<UserVoucher> {
             physics: const ClampingScrollPhysics(),
             itemCount: articleLength,
             itemBuilder: (context, index) {
-              final userVoucher = userVoucherViewModel.userVouchers[index];
+              final userVoucher = userVoucherViewModel.items[index];
               return GestureDetector(
                 onTap: () {
                   _goToDetailUserVoucher(userVoucher);
@@ -85,9 +86,11 @@ class _UserVoucherState extends State<UserVoucher> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("${userVoucher.id} ${userVoucher.name}",
+                            Text(userVoucher.name,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold)),
+                            widgetHelper.textLabel(
+                                formatJakartaDate(userVoucher.createdAt))
                             // Text("Created at: ${article.created_at}"),
                           ],
                         ),
@@ -106,12 +109,11 @@ class _UserVoucherState extends State<UserVoucher> {
     widgetHelper = WidgetHelper(context);
     return RefreshIndicator(
       onRefresh: () async {
-        userVoucherViewModel.userVouchers.clear();
-        userVoucherViewModel.page = 1;
+        userVoucherViewModel.resetPagination();
         await userVoucherViewModel.fetchUserVouchers();
       },
       child: SizedBox(
-        height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
+        height: widgetHelper.heightScreen * 0.8, // ambil tinggi layar penuh
         child: SingleChildScrollView(
           controller: _scrollController,
           physics: const AlwaysScrollableScrollPhysics(),

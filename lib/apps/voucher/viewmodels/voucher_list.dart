@@ -5,15 +5,13 @@ import 'package:titiknol/services/user.dart';
 import 'package:titiknol/models/user.dart';
 import 'package:titiknol/models/voucher.dart';
 import 'package:titiknol/pkg/helpers/exception_helper.dart';
+import 'package:titiknol/pkg/mixins/pagination.dart';
 
-class VoucherListViewModel extends GetxController {
+class VoucherListViewModel extends GetxController
+    with PaginationMixin<Voucher> {
   final VoucherService _voucherService = VoucherService();
   final UserService _userService = UserService();
-  var vouchers = <Voucher>[].obs;
-  var isLoadingMore = false.obs;
   var user = User().obs;
-  var page = 1;
-  final int limit = 10;
 
   @override
   void onInit() {
@@ -26,7 +24,6 @@ class VoucherListViewModel extends GetxController {
     try {
       if (isLoadingMore.value) return;
       isLoadingMore.value = true;
-      printDebug(page);
       final response =
           await _voucherService.getVouchers(page: page, limit: limit);
       if (response.containsKey('message')) {
@@ -34,8 +31,11 @@ class VoucherListViewModel extends GetxController {
       }
       final data = response['data']['vouchers'] as List;
       if (data.isNotEmpty || page == 1) {
-        vouchers.addAll(data.map((u) => Voucher.fromJson(u)).toList());
+        items.addAll(data.map((u) => Voucher.fromJson(u)).toList());
         page++;
+      } else {
+        isLoadingMore.value = true;
+        return;
       }
       isLoadingMore.value = false;
     } catch (e) {

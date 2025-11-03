@@ -47,7 +47,7 @@ class _VoucherListState extends State<VoucherList> {
 
   Widget listVouchers() {
     return Obx(() {
-      int voucherLength = voucherListViewModel.vouchers.length;
+      int voucherLength = voucherListViewModel.items.length;
       if (voucherLength == 0) {
         return SizedBox(
           height: widgetHelper.heightScreen * 0.7, // ambil tinggi layar penuh
@@ -69,7 +69,7 @@ class _VoucherListState extends State<VoucherList> {
             childAspectRatio: 3 / 3.7,
           ),
           itemBuilder: (context, index) {
-            final voucher = voucherListViewModel.vouchers[index];
+            final voucher = voucherListViewModel.items[index];
 
             return GestureDetector(
               onTap: () => _goToDetailVoucher(
@@ -168,8 +168,7 @@ class _VoucherListState extends State<VoucherList> {
 
     return RefreshIndicator(
         onRefresh: () async {
-          voucherListViewModel.vouchers.clear();
-          voucherListViewModel.page = 1;
+          voucherListViewModel.resetPagination();
           await voucherListViewModel.fetchVouchers();
           await voucherListViewModel.fetchUser();
         },
