@@ -16,6 +16,27 @@ class VoucherList extends StatefulWidget {
 }
 
 class _VoucherListState extends State<VoucherList> {
+  final ScrollController _scrollController = ScrollController();
+  late WidgetHelper widgetHelper;
+  late VoucherListViewModel voucherListViewModel;
+  @override
+  void initState() {
+    super.initState();
+    voucherListViewModel = Get.find();
+
+    // Listener untuk pagination
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent - 200 &&
+          !voucherListViewModel.isLoadingMore.value) {
+        voucherListViewModel.fetchVouchers();
+      }
+    });
+
+    // Load data awal
+    voucherListViewModel.fetchVouchers();
+  }
+
   void _goToDetailVoucher(Voucher voucher, int point) {
     final data = {
       "voucher_id": voucher.id,
@@ -138,8 +159,7 @@ class _VoucherListState extends State<VoucherList> {
 
   @override
   Widget build(BuildContext context) {
-    final widgetHelper = WidgetHelper(context);
-    VoucherListViewModel voucherListViewModel = Get.put(VoucherListViewModel());
+    widgetHelper = WidgetHelper(context);
 
     return RefreshIndicator(
         onRefresh: () async {

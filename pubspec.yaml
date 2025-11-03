@@ -23,6 +23,7 @@ dependencies:
   mobile_scanner: ^3.0.0    # cek versi terbaru di pub.dev saat implementasi
   package_info_plus: ^4.0.0
   permission_handler: ^10.0.0
+  qr_flutter: ^4.1.0
   recase: ^4.1.0
   shared_preferences: ^2.3.2
   
@@ -44,6 +45,16 @@ flutter:
     - assets/icons/
     - .env.dev
     - .env.prod
+
+  fonts:
+  - family: Robotox
+    fonts:
+      - asset: fonts/Roboto-Regular.ttf
+      - asset: fonts/Roboto-Bold.ttf
+        weight: 700
+  - family: Montserrat
+    fonts:
+      - asset: fonts/Montserrat-Regular.ttf
 
 flutter_launcher_icons:
   android: true

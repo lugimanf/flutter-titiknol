@@ -33,7 +33,7 @@ class VoucherDetailViewModel extends GetxController {
 
   Future<Map<String, dynamic>> insertVoucher(int id) async {
     try {
-      final response = await _userVoucherService.insertVoucher(id);
+      final response = await _userVoucherService.fetchUserVouchers();
       if (response['status'] != "success") {
         throw Exception(response['message']); // lempar pesan error
       }

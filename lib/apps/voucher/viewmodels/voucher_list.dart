@@ -9,7 +9,10 @@ class VoucherListViewModel extends GetxController {
   final VoucherService _voucherService = VoucherService();
   final UserService _userService = UserService();
   var vouchers = <Voucher>[].obs;
+  var isLoadingMore = false.obs;
   var user = User().obs;
+  var page = 1;
+  final int limit = 10;
 
   @override
   void onInit() {
@@ -20,12 +23,19 @@ class VoucherListViewModel extends GetxController {
 
   Future<void> fetchVouchers() async {
     try {
-      final response = await _voucherService.getVouchers();
+      if (isLoadingMore.value) return;
+      isLoadingMore.value = true;
+      final response =
+          await _voucherService.getVouchers(page: page, limit: limit);
       if (response.containsKey('message')) {
         throw Exception(response['message']); // lempar pesan error
       }
       final data = response['data']['vouchers'] as List;
-      vouchers.assignAll(data.map((u) => Voucher.fromJson(u)).toList());
+      if (data.isNotEmpty) {
+        vouchers.assignAll(data.map((u) => Voucher.fromJson(u)).toList());
+        page++;
+      }
+      isLoadingMore.value = false;
     } catch (e) {
       exceptionDialogBox(e);
     }

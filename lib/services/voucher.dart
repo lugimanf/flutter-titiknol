@@ -5,7 +5,8 @@ import 'dart:async';
 class VoucherService {
   final HttpHelper httpHelper = HttpHelper();
 
-  Future<Map<String, dynamic>> getVouchers() async {
+  Future<Map<String, dynamic>> getVouchers(
+      {int page = 1, int limit = 10}) async {
     httpHelper.setUrl(Urls.domain, Urls.vouchers);
     var response = await httpHelper
         .get(queryParams: {"limit": "10", "page": "1", "order_by": "id;desc"});

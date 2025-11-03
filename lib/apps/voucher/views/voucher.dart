@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:titiknol/apps/voucher/views/voucher_user.dart';
+import 'package:titiknol/apps/voucher/views/user_voucher.dart';
 import 'package:titiknol/apps/voucher/views/voucher_list.dart';
+import 'package:titiknol/apps/voucher/viewmodels/user_voucher.dart';
+import 'package:titiknol/apps/voucher/viewmodels/voucher_list.dart';
 
 // Controller buat handle perubahan tab dari mana aja
 class VoucherTabController extends GetxController {
@@ -43,6 +45,9 @@ class _VoucherState extends State<Voucher> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    UserVoucherViewModel userVoucherViewModel = Get.put(UserVoucherViewModel());
+    VoucherListViewModel voucherListViewModel = Get.put(VoucherListViewModel());
+    userVoucherViewModel = Get.put(UserVoucherViewModel());
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -60,7 +65,7 @@ class _VoucherState extends State<Voucher> with SingleTickerProviderStateMixin {
               child: TabBarView(
                 controller: _tabController,
                 children: const [
-                  VoucherUser(),
+                  UserVoucher(),
                   VoucherList(),
                 ],
               ),

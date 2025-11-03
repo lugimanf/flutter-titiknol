@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import 'package:titiknol/pkg/const/fonts.dart' as const_fonts;
+
 class WidgetHelper {
   late double widthScreen, heightScreen;
   BuildContext context;
@@ -12,6 +14,11 @@ class WidgetHelper {
   void init() {
     widthScreen = MediaQuery.sizeOf(context).width;
     heightScreen = MediaQuery.sizeOf(context).height;
+  }
+
+  Widget textLabel(String text, {double height = 0, double width = 0}) {
+    return Text(text,
+        style: const TextStyle(fontFamily: const_fonts.fontFamilyUsed));
   }
 
   Widget createSpacedBox({double height = 0, double width = 0}) {

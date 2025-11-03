@@ -88,14 +88,14 @@ class HttpHelper {
       if (globals.token?.isEmpty == false) {
         _headers['Authorization'] = "Bearer ${globals.token}";
       }
-      // final uri = Uri.parse(_url!).replace(
-      //   queryParameters: queryParams?.map(
-      //     (key, value) => MapEntry(key, value.toString()),
-      //   ),
-      // );
+      final uri = Uri.parse(_url!).replace(
+        queryParameters: queryParams?.map(
+          (key, value) => MapEntry(key, value.toString()),
+        ),
+      );
       final response = await http
           .get(
-            Uri.parse(_url!),
+            uri,
             headers: _headers,
           )
           .timeout(const Duration(seconds: const_https.timeOutHTTP));
