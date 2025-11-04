@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:titiknol/pkg/app_config.dart';
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
@@ -7,7 +8,6 @@ import 'dart:convert';
 import 'package:titiknol/pkg/const/urls/urls.dart';
 import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 import 'package:titiknol/pkg/const/https.dart' as const_https;
-import 'package:titiknol/pkg/globals/globals.dart' as globals;
 
 const int statusCodeSuccess = 1;
 const int statusCodeBadRequest = 0;
@@ -21,7 +21,7 @@ class HttpHelper {
 
   final Map<String, String> _headers = {
     'Content-Type': 'application/json',
-    'version': globals.version,
+    'version': AppConfig.version!,
     'platform': const_https.platformUsed,
   };
 
@@ -62,8 +62,8 @@ class HttpHelper {
           "message": errorMessageUrlNotSet,
         };
       }
-      if (globals.token?.isEmpty == false) {
-        _headers['Authorization'] = "Bearer ${globals.token}";
+      if (AppConfig.user!.jwtToken?.isEmpty == false) {
+        _headers['Authorization'] = "Bearer ${AppConfig.user!.jwtToken}";
       }
       final response = await http
           .post(
@@ -85,8 +85,8 @@ class HttpHelper {
           "message": errorMessageUrlNotSet,
         };
       }
-      if (globals.token?.isEmpty == false) {
-        _headers['Authorization'] = "Bearer ${globals.token}";
+      if (AppConfig.user!.jwtToken?.isEmpty == false) {
+        _headers['Authorization'] = "Bearer ${AppConfig.user!.jwtToken}";
       }
       final uri = Uri.parse(_url!).replace(
         queryParameters: queryParams?.map(
@@ -112,8 +112,8 @@ class HttpHelper {
           "message": errorMessageUrlNotSet,
         };
       }
-      if (globals.token?.isEmpty == false) {
-        _headers['Authorization'] = "Bearer ${globals.token}";
+      if (AppConfig.user!.jwtToken?.isEmpty == false) {
+        _headers['Authorization'] = "Bearer ${AppConfig.user!.jwtToken}";
       }
       final response = await http
           .patch(
@@ -132,7 +132,7 @@ class HttpHelper {
     data = jsonDecode(response.body);
     switch (checkStatusCode(response.statusCode)) {
       case statusCodeRedirectToLogin:
-        globals.token = null;
+        AppConfig.user!.fcmToken = null;
         Get.offAllNamed('/login');
         break;
       case statusCodeBadRequest:

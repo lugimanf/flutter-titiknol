@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import './home/views/home.dart';
-import './account/views/account.dart';
+import 'profile/views/profile.dart';
 import 'voucher/views/voucher.dart';
 import 'task/views/task.dart';
+import 'package:titiknol/apps/scanner/views/scanner.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -19,7 +22,7 @@ class _MainMenuState extends State<MainMenu> {
     const Home(),
     const Task(),
     const Voucher(),
-    const Account(),
+    const Profile(),
   ];
 
   void onTabTapped(int index) {
@@ -71,7 +74,7 @@ class _MainMenuState extends State<MainMenu> {
       floatingActionButton: showMiddleButton
           ? FloatingActionButton(
               onPressed: () {
-                debugPrint("FAB Pressed");
+                Get.to(() => const QRISScannerPage());
               },
               shape: const CircleBorder(),
               backgroundColor: Colors.amber,

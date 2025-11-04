@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:titiknol/pkg/widget/camera/torch_button.dart';
+
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -117,14 +119,9 @@ class _QRISScannerPageState extends State<QRISScannerPage> {
       appBar: AppBar(
         title: const Text('QRIS Scanner'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.flash_on),
+          TorchButton(
             onPressed: () => cameraController.toggleTorch(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.cameraswitch),
-            onPressed: () => cameraController.switchCamera(),
-          ),
+          )
         ],
       ),
       body: Stack(

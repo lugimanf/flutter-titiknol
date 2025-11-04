@@ -1,13 +1,15 @@
-import 'package:titiknol/pkg/const/urls/urls.dart';
-import 'package:titiknol/pkg/helpers/http_helper.dart';
 import 'dart:convert';
 import 'dart:async';
+
+import 'package:titiknol/pkg/app_config.dart';
+import 'package:titiknol/pkg/const/urls/urls.dart';
+import 'package:titiknol/pkg/helpers/http_helper.dart';
 
 class UserService {
   final HttpHelper httpHelper = HttpHelper();
 
   Future<Map<String, dynamic>> getUser() async {
-    httpHelper.setUrl(Urls.domain, Urls.user);
+    httpHelper.setUrl(AppConfig.url!.domain, Urls.user);
     var response = await httpHelper.get();
     return response;
   }
@@ -16,7 +18,7 @@ class UserService {
     var payload = {
       "fcm_token": fcmToken,
     };
-    httpHelper.setUrl(Urls.domain, Urls.userUpdateFcmToken);
+    httpHelper.setUrl(AppConfig.url!.domain, Urls.userUpdateFcmToken);
     httpHelper.setBody(jsonEncode(payload));
     var response = await httpHelper.patch();
     return response;

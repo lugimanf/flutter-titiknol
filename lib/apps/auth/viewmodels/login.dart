@@ -1,14 +1,14 @@
 import 'package:titiknol/services/login.dart';
 import 'package:get/get.dart';
 
-import 'package:titiknol/pkg/storage/shared_preferences.dart';
+import 'package:titiknol/pkg/storage/secure_storage_helper.dart';
 import 'package:titiknol/pkg/const/keys.dart' as const_keys;
-import 'package:titiknol/pkg/globals/globals.dart' as globals;
 import 'package:titiknol/apps/auth/viewmodels/fcm_token.dart';
+import 'package:titiknol/pkg/app_config.dart';
 
 class LoginViewModel extends GetxController {
   final LoginService _loginService = LoginService();
-  final prefs = SharedPreferencesHelper();
+  final prefs = FlutterSecureStorageHelper();
   RxBool isLoading = false.obs;
   RxBool isGetOTP = false.obs;
   RxString messageLogin = "".obs;
@@ -43,8 +43,8 @@ class LoginViewModel extends GetxController {
       if (response.containsKey('data')) {
         login = true;
         prefs.setString(const_keys.jwtToken, response['data']['token']);
-        globals.token = response['data']['token'];
-        fcmTokenViewModel.updateFcmTOken(globals.fcmToken!);
+        AppConfig.user!.jwtToken = response['data']['token'];
+        fcmTokenViewModel.updateFcmTOken(AppConfig.user!.fcmToken!);
       } else if (response.containsKey('message')) {
         messageLogin(response['message']);
       }

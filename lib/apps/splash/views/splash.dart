@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:titiknol/pkg/app_config.dart';
 
 import 'package:titiknol/pkg/const/assets.dart' as const_assets;
-import 'package:titiknol/pkg/globals/globals.dart' as globals;
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 3), () {
-      if (globals.token == null) {
+      if (AppConfig.user!.jwtToken == null) {
         Get.offAllNamed("/login");
         return;
       }

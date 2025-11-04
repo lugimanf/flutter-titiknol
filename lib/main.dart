@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,17 +8,20 @@ import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:titiknol/apps/auth/viewmodels/fcm_token.dart';
-import 'package:titiknol/pkg/storage/shared_preferences.dart';
+import 'package:titiknol/pkg/storage/secure_storage_helper.dart';
 import 'package:titiknol/pkg/views/loading_overlay/loading_overlay.dart';
-import 'package:titiknol/pkg/globals/globals.dart' as globals;
 import 'package:titiknol/pkg/const/keys.dart' as const_keys;
 import 'package:titiknol/apps/splash/views/splash.dart';
 import 'package:titiknol/apps/auth/views/login_form.dart';
 import 'package:titiknol/apps/main_menu.dart';
+import 'package:titiknol/apps/no_connection.dart';
 import 'package:titiknol/pkg/helpers/debug_helper.dart';
 import 'package:titiknol/pkg/firebase/firebase.dart';
+import 'package:titiknol/pkg/middleware/check_connection.dart';
+import 'package:titiknol/pkg/helpers/connection_checker_helper.dart';
+import 'package:titiknol/pkg/app_config.dart';
 
-late final SharedPreferencesHelper prefs;
+late final FlutterSecureStorageHelper prefs;
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -28,18 +31,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
-
-Future<void> _getAppVersion() async {
-  PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  globals.version = packageInfo.version;
-}
-
-void init() {
-  prefs = SharedPreferencesHelper();
-  globals.token = prefs.getString(const_keys.jwtToken);
-  globals.fcmToken = prefs.getString(const_keys.fcmToken);
-  _getAppVersion();
-}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +44,12 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env.$env"); // misal .env.prod
 
   //setup penyimpanan lokal
-  await SharedPreferencesHelper().init();
+  await FlutterSecureStorageHelper().init();
+  prefs = FlutterSecureStorageHelper();
+  await AppConfig.init(prefs);
+
+  //setup check connection
+  await ConnectionChecker.pingHost();
 
   //setup firebase
   // ✅ Wajib init Firebase sebelum runApp
@@ -77,7 +73,6 @@ Future<void> main() async {
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
-  init();
   runApp(const MyApp());
 }
 
@@ -108,20 +103,20 @@ class _MyAppState extends State<MyApp> {
     printDebug('🔐 Permission: ${settings.authorizationStatus}');
 
     // 2. Ambil token FCM (kirim ke server kalau perlu)
-    printDebug("globals.fcmToken => ${globals.fcmToken}");
-    if (globals.fcmToken == null) {
+    printDebug("user.fcmToken => ${AppConfig.user!.fcmToken}");
+    if (AppConfig.user!.fcmToken == null) {
       String? fcmToken = await _messaging.getToken();
       if (fcmToken != null) {
         prefs.setString(const_keys.fcmToken, fcmToken);
-        globals.fcmToken = fcmToken;
+        AppConfig.user!.fcmToken = fcmToken;
       }
     }
 
     // 2️⃣ Dengarkan event refresh (otomatis)
     _messaging.onTokenRefresh.listen((newFcmToken) {
-      if (globals.token != null) {
+      if (AppConfig.user!.jwtToken != null) {
         prefs.setString(const_keys.jwtToken, newFcmToken);
-        globals.fcmToken = newFcmToken;
+        AppConfig.user!.fcmToken = newFcmToken;
         fcmTokenViewModel.updateFcmTOken(newFcmToken);
       }
     });
@@ -131,7 +126,7 @@ class _MyAppState extends State<MyApp> {
       printDebug(
           '📩 Message received in foreground: ${message.notification?.title}');
       final notification = message.notification;
-      if (notification != null && globals.token != null) {
+      if (notification != null && AppConfig.user!.jwtToken != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
           notification.title,
@@ -161,12 +156,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(initialRoute: '/', getPages: [
-      GetPage(name: '/', page: () => const SplashScreen()),
+      GetPage(
+        name: '/',
+        page: () => const SplashScreen(),
+        middlewares: [ConnectionMiddleware()],
+      ),
       GetPage(
           name: '/mainMenu',
           page: () => const LoadingOverlay(child: MainMenu())),
       GetPage(
           name: '/login', page: () => const LoadingOverlay(child: LoginForm())),
+      GetPage(name: '/noConnection', page: () => const NoConnectionPage()),
     ]);
   }
 }

@@ -1,7 +1,9 @@
-import 'package:titiknol/pkg/const/urls/urls.dart';
-import 'package:titiknol/pkg/helpers/http_helper.dart';
 import 'dart:convert';
 import 'dart:async';
+
+import 'package:titiknol/pkg/app_config.dart';
+import 'package:titiknol/pkg/const/urls/urls.dart';
+import 'package:titiknol/pkg/helpers/http_helper.dart';
 
 class LoginService {
   final HttpHelper httpHelper = HttpHelper();
@@ -10,7 +12,7 @@ class LoginService {
     var payload = {
       "email": email,
     };
-    httpHelper.setUrl(Urls.domain, Urls.login);
+    httpHelper.setUrl(AppConfig.url!.domain, Urls.login);
     httpHelper.setBody(jsonEncode(payload));
     var response = await httpHelper.post();
     return response;
@@ -21,7 +23,7 @@ class LoginService {
       "otp": otp,
       "token": token,
     };
-    httpHelper.setUrl(Urls.domain, Urls.loginConfirmOtp);
+    httpHelper.setUrl(AppConfig.url!.domain, Urls.loginConfirmOtp);
     httpHelper.setBody(jsonEncode(payload));
     var response = await httpHelper.post();
     return response;
