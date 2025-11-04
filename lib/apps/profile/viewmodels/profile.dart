@@ -5,7 +5,7 @@ import 'package:titiknol/pkg/helpers/exception_helper.dart';
 
 class ProfileViewModel extends GetxController {
   final UserService _userService = UserService();
-  var user = User().obs;
+  final user = Rx<User?>(null);
 
   @override
   void onInit() {
@@ -19,6 +19,7 @@ class ProfileViewModel extends GetxController {
       if (response.containsKey('message')) {
         throw Exception(response['message']); // lempar pesan error
       }
+
       user.value = User.fromJson(response['data']);
     } catch (e) {
       exceptionDialogBox(e);

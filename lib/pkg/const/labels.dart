@@ -1,13 +1,13 @@
-const String buttonBack = "Back";
+const String buttonBack = "Kembali";
 const String buttonClass = "Class";
-const String buttonClose = "Close";
+const String buttonClose = "Tutup";
 const String buttonLibrary = "Library";
 const String buttonLogin = "Login";
 const String buttonLoginWithGoogle = "Login With Google";
 const String buttonLogout = "Logout";
 const String buttonRegister = "Register";
 const String buttonStore = "Collection";
-const String buttonTask = "Task";
+const String buttonTask = "Tugas";
 const String buttonEvent = "Event";
 const String textButtonSeeMore = "See More >>";
 const String textDataUser = "Usename";
@@ -49,3 +49,9 @@ const String dialogExchangeAskConfirmation =
     'Apakah kamu yakin ingin menukar voucher ini dengan point?';
 const String labelEmptyVoucherList = "Tidak ada voucher yang bisa ditukar";
 const String labelEmptyUserVoucher = "Anda belum memiliki voucher";
+const String buttonProfileQRCode = "Show QR Code";
+
+const String labelTask = 'Tugas';
+const String labelHome = 'Beranda';
+const String labelVoucher = 'Voucher';
+const String labelProfile = 'Riwayat';

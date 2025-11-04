@@ -6,6 +6,7 @@ import 'profile/views/profile.dart';
 import 'voucher/views/voucher.dart';
 import 'task/views/task.dart';
 import 'package:titiknol/apps/scanner/views/scanner.dart';
+import 'package:titiknol/pkg/const/labels.dart' as const_label;
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -94,14 +95,14 @@ class _MainMenuState extends State<MainMenu> {
                 ? [
                     buildTabItem(
                       icon: Icons.home,
-                      label: "Home",
+                      label: const_label.labelHome,
                       index: 0,
                       selected: currentIndex == 0,
                       onTap: () => onTabTapped(0),
                     ),
                     buildTabItem(
                       icon: Icons.assignment,
-                      label: "Task",
+                      label: const_label.labelTask,
                       index: 1,
                       selected: currentIndex == 1,
                       onTap: () => onTabTapped(1),
@@ -109,14 +110,14 @@ class _MainMenuState extends State<MainMenu> {
                     const SizedBox(width: 48),
                     buildTabItem(
                       icon: Icons.airplane_ticket,
-                      label: "Voucher",
+                      label: const_label.labelVoucher,
                       index: 2,
                       selected: currentIndex == 2,
                       onTap: () => onTabTapped(2),
                     ),
                     buildTabItem(
                       icon: Icons.person,
-                      label: "Profile",
+                      label: const_label.labelProfile,
                       index: 3,
                       selected: currentIndex == 3,
                       onTap: () => onTabTapped(3),
@@ -125,28 +126,28 @@ class _MainMenuState extends State<MainMenu> {
                 : [
                     buildTabItem(
                       icon: Icons.home,
-                      label: "Home",
+                      label: const_label.labelHome,
                       index: 0,
                       selected: currentIndex == 0,
                       onTap: () => onTabTapped(0),
                     ),
                     buildTabItem(
                       icon: Icons.assignment,
-                      label: "Task",
+                      label: const_label.labelTask,
                       index: 1,
                       selected: currentIndex == 1,
                       onTap: () => onTabTapped(1),
                     ),
                     buildTabItem(
                       icon: Icons.card_giftcard,
-                      label: "Voucher",
+                      label: const_label.labelVoucher,
                       index: 2,
                       selected: currentIndex == 2,
                       onTap: () => onTabTapped(2),
                     ),
                     buildTabItem(
                       icon: Icons.person,
-                      label: "Profile",
+                      label: const_label.labelProfile,
                       index: 3,
                       selected: currentIndex == 3,
                       onTap: () => onTabTapped(3),

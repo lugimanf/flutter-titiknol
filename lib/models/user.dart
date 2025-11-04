@@ -6,16 +6,17 @@ class User {
   final int point;
   final int level;
   final int rankID;
+  final String? profilePhoto;
 
-  User({
-    this.id = 0,
-    this.email = "test@test.com",
-    this.firstName = "x1",
-    this.lastName = "x2",
-    this.point = 0,
-    this.level = 1,
-    this.rankID = 1,
-  });
+  User(
+      {this.id = 0,
+      this.email = "test@test.com",
+      this.firstName = "x1",
+      this.lastName = "x2",
+      this.point = 0,
+      this.level = 1,
+      this.rankID = 1,
+      this.profilePhoto});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -26,6 +27,7 @@ class User {
       point: json['point'],
       level: json['level'],
       rankID: json['rank_id'] ?? 1,
+      profilePhoto: json['profile_photo'],
     );
   }
 }
