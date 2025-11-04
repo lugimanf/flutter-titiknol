@@ -5,6 +5,8 @@ import 'package:titiknol/pkg/const/fonts.dart' as const_fonts;
 import 'package:titiknol/pkg/const/labels.dart' as const_labels;
 
 import 'package:titiknol/apps/auth/viewmodels/login.dart';
+import 'package:titiknol/pkg/helpers/widget_helper.dart';
+import 'package:titiknol/pkg/const/labels.dart' as const_label;
 
 class OtpForm extends StatefulWidget {
   final String token; // Tambahkan parameter
@@ -59,6 +61,7 @@ class _OtpFormState extends State<OtpForm> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetHelper widgetHelper = WidgetHelper(context);
     return Container(
         margin: const EdgeInsets.only(top: 0, bottom: 0, left: 0, right: 0),
         child: Column(
@@ -66,7 +69,7 @@ class _OtpFormState extends State<OtpForm> {
             const Padding(
               padding: EdgeInsets.only(bottom: 10),
               child: Text(
-                "sent to email",
+                const_label.labelSendToEmail,
                 style: TextStyle(fontFamily: const_fonts.fontFamilyUsed),
               ),
             ),
@@ -74,7 +77,7 @@ class _OtpFormState extends State<OtpForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(4, (index) {
                 return Container(
-                  width: 80,
+                  width: widgetHelper.widthScreen * 0.18,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   child: TextField(
                     controller: _controllers[index],
@@ -133,7 +136,7 @@ void showOtpModal(BuildContext context, String token) {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "Enter OTP code",
+              const_label.labelEnterOTPCode,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 3),

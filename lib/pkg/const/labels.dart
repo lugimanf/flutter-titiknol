@@ -47,11 +47,19 @@ const String dialogButtonCancel = "Batal";
 const String dialogButtonExchange = "Ya, Tukar!";
 const String dialogExchangeAskConfirmation =
     'Apakah kamu yakin ingin menukar voucher ini dengan point?';
-const String labelEmptyVoucherList = "Tidak ada voucher yang bisa ditukar";
-const String labelEmptyUserVoucher = "Anda belum memiliki voucher";
+const String labelEmptyVoucherList = "tidak ada voucher yang bisa ditukar";
+const String labelEmptyUserVoucher = "anda belum memiliki voucher";
+const String labelEmptyUserTask = "tidak ada tugas yang diambil";
+const String labelEmptyUserList = "tidak ada tugas saat ini";
 const String buttonProfileQRCode = "Show QR Code";
 
 const String labelTask = 'Tugas';
 const String labelHome = 'Beranda';
 const String labelVoucher = 'Voucher';
 const String labelProfile = 'Riwayat';
+
+const String tabLabelMyTask = 'Tugasku';
+const String tabLabelTaskList = 'Tugas';
+
+const String labelEnterOTPCode = 'masukkan kode OTP';
+const String labelSendToEmail = 'OTP dikirim ke email';
